@@ -1,7 +1,13 @@
 import React from 'react';
 
-function Queue() {
-    return (<div><label>Queue:<div></div></label></div>)
+function Queue({queue}) {
+    return (
+        <div>
+            <label>Queue:
+                <div>{queue.map(item => (<li>{item.filename}</li>))}</div>
+            </label>
+        </div>
+        )
 }
 
 export default Queue;
