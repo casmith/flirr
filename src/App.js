@@ -5,6 +5,7 @@ import './App.css';
 import AddToQueue from './AddToQueue';
 import Menu from './Menu';
 import Queue from './Queue';
+import Search from './Search';
 
 function App() {
     return (
@@ -16,9 +17,10 @@ function App() {
                         <Redirect to="/search" />
                     </Route>
                     <Route path="/search">
-                        <AddToQueue />          
+                        <Search />
                     </Route>
                     <Route path="/downloads">
+                        <AddToQueue />
                         <Queue />
                     </Route>
                 </Switch>
