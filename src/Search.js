@@ -4,7 +4,6 @@ import axios from 'axios';
 function Search({handleEnqueue}) {
     const [results, setResults] = useState([]);
     const [keywords, setKeywords] = useState("");
-    
 
     const search = (keywords) => {
         return axios.get('/search?keywords=' + keywords)
