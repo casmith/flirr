@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import './Queue.css'
 
 const loadQueue = () => {
-    return axios.get('/queue')
+    return axios.get('/api/queue')
         .then((response) => response.data)
         .catch((error) => console.error(error))
 }
@@ -17,7 +17,7 @@ function Queue() {
                 setQueue(q.servers
                     .flat()
                     .reduce((acc, item) => {
-                        item.requests.forEach(r => acc.push({nick: item.nick, filename: r}))
+                        item.requests.forEach(r => acc.push({nick: item.nick, filename: r.request, status: r.status}))
                         return acc;
                     }, []));
             })
@@ -31,12 +31,14 @@ function Queue() {
                     <tr>
                         <th>Nick</th>
                         <th>Filename</th>
+                        <th>Status</th>
                     </tr>
                     <tbody>
                     {queue.map(item => (
                         <tr>
                             <td>{item.nick}</td>
                             <td>{item.filename}</td>
+                            <td>{item.status}</td>
                         </tr>
                     ))}
                     </tbody>
