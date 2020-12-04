@@ -26,7 +26,7 @@ function Search({handleEnqueue}) {
             </label>
             <h2>Results</h2>
             <div>
-                {results.map((result, i) => (<div key={i}>{result.filename} <button onClick={() => enqueue(result)}>Enqueue</button></div>))}
+            {results.map((result, i) => (<div key={i}>{result.nick} {result.filename} <button onClick={() => enqueue(result)}>Enqueue</button></div>))}
             </div>
         </form>
     )
