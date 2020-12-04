@@ -6,7 +6,7 @@ function Search({handleEnqueue}) {
     const [keywords, setKeywords] = useState("");
 
     const search = (keywords) => {
-        return axios.get('/search?keywords=' + keywords)
+        return axios.get('/api/search?keywords=' + keywords)
             .then((response) => response.data)
             .catch((error) => console.error(error))
     }
