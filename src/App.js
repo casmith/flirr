@@ -13,12 +13,17 @@ function App() {
     const [queue, setQueue] = useState([])
     const [status, setStatus] = useState({})
 
-    const handleEnqueue = (item) => queue.includes(item) || setQueue([].concat(queue, item));
+    const handleEnqueue = (item) => {
+        const request = {servers: [{nick: item.tracks[0].nick, requests: item.tracks.map(track => ({request: track.requestString}))}]};
+        axios.post('/api/queue', request)
+            .then(response => response.data)
+            .then(console.log("Submitted request to queue"));
+    };
+
     useEffect(() => {
         axios.get('/api/status').then(response => response.data)
             .then(status => setStatus(status))
     }, [true])
-    
 
     const statusElement = status.connected ? 
         <div class="status">{status.nick} connected to {status.serverName} in channel {status.channel}</div> : 
@@ -26,7 +31,6 @@ function App() {
 
     return (
         <div>
-            
             <Router>
                 <Menu downloads={queue.length} />
                 {statusElement}
