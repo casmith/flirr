@@ -3,11 +3,14 @@ import axios from 'axios';
 
 function Search({handleEnqueue}) {
     const [results, setResults] = useState([]);
+    const [users, setUsers] = useState([]);
     const [keywords, setKeywords] = useState("");
 
     const search = (keywords) => {
         return axios.get('/api/search?keywords=' + keywords)
             .then((response) => response.data)
+            .then((searchResults) => axios.get('/api/server/users')
+                .then(response => ([searchResults, response.data])))
             .catch((error) => {
                 console.error(error);
                 return [];
@@ -16,7 +19,11 @@ function Search({handleEnqueue}) {
     
     const submitSearch = (e) => {
         e.preventDefault();
-        return search(keywords).then((results) => setResults(results));
+        return search(keywords).then((response) => {
+            const [results, users] = response;
+            setUsers(users);
+            setResults(results);
+        });
     }
 
     const enqueue = (result) => handleEnqueue(result)
@@ -30,7 +37,7 @@ function Search({handleEnqueue}) {
             <h2>Results</h2>
             <div>
             {results.map((result, i) => (
-                <div key={i}>{result.tracks[0].nick} {result.album} {result.filename} <button onClick={() => enqueue(result)}>Enqueue</button>
+                <div key={i}>{result.tracks[0].nick}{users.includes(result.tracks[0].nick) || ' (Offline)'} {result.album} {result.filename} <button onClick={() => enqueue(result)}>Enqueue</button>
                 {result.tracks.map(track => (
                     <div>{track.filename}</div>
                 ))}
