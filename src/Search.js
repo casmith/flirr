@@ -10,7 +10,7 @@ function Search({handleEnqueue}) {
             .then((response) => response.data)
             .catch((error) => {
                 console.error(error);
-                setResults([]);
+                return [];
             });
     }
     
