@@ -8,7 +8,10 @@ function Search({handleEnqueue}) {
     const search = (keywords) => {
         return axios.get('/api/search?keywords=' + keywords)
             .then((response) => response.data)
-            .catch((error) => console.error(error))
+            .catch((error) => {
+                console.error(error);
+                setResults([]);
+            });
     }
     
     const submitSearch = (e) => {
