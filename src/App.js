@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
-import AddToQueue from './AddToQueue';
 import Menu from './Menu';
 import Queue from './Queue';
 import Search from './Search';
@@ -80,7 +79,6 @@ function App() {
                         <Search handleEnqueue={handleEnqueue}/>
                     </Route>
                     <Route path="/downloads">
-                        <AddToQueue />
                         <Queue queue={queue} />
                     </Route>
                 </Switch>
