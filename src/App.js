@@ -10,9 +10,36 @@ import axios from 'axios';
 
 function App() {
 
-    const [queue, setQueue] = useState([])
     const [status, setStatus] = useState({})
     const [users, setUsers] = useState([])
+    const [queue, setQueue] = useState([]);
+    
+    const loadQueue = () => {
+        return axios.get('/api/queue')
+            .then((response) => response.data)
+            .catch((error) => console.error(error))
+    }
+    
+    const reloadQueue = () => {
+        return loadQueue()
+            .then(q => {
+                setQueue(q.servers
+                    .flat()
+                    .reduce((acc, item) => {
+                        item.requests.forEach(r => acc.push({nick: item.nick, filename: r.request, status: r.status}))
+                        return acc;
+                    }, []));
+            })
+            .catch(e => console.error(e));
+    }
+
+    useEffect(() => {
+        reloadQueue();
+        const interval = setInterval(() => {
+            reloadQueue();
+        }, 5000);
+        return () => {clearInterval(interval);};
+    }, []);
 
     const handleEnqueue = (item) => {
         const request = {servers: [{nick: item.tracks[0].nick, requests: item.tracks.map(track => ({request: track.requestString}))}]};

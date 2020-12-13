@@ -1,32 +1,12 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Queue.css'
 
-const loadQueue = () => {
-    return axios.get('/api/queue')
-        .then((response) => response.data)
-        .catch((error) => console.error(error))
-}
-
-function Queue() {
-    const [queue, setQueue] = useState([]);
-
-    const reloadQueue = () => {
-        return loadQueue()
-            .then(q => {
-                setQueue(q.servers
-                    .flat()
-                    .reduce((acc, item) => {
-                        item.requests.forEach(r => acc.push({nick: item.nick, filename: r.request, status: r.status}))
-                        return acc;
-                    }, []));
-            })
-            .catch(e => console.error(e));
-    }
+function Queue({queue}) {
 
     return (
         <div>
-            <label>Queue: <button onClick={reloadQueue}>Reload</button>
+            <label>Queue:
                 <table>
                     <tr>
                         <th>Nick</th>
