@@ -24,9 +24,16 @@ function App() {
     useEffect(() => {
         axios.get('/api/status').then(response => response.data)
             .then(status => setStatus(status))
-        axios.get('/api/server/users').then(response => response.data)
-            .then(status => setUsers(status))
+        
     }, [true])
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+        axios.get('/api/server/users').then(response => response.data)
+            .then(status => setUsers(status))    
+        }, 5000);
+        return () => {clearInterval(interval);};
+    }, []);
 
     const statusElement = status.connected ? 
         <div class="status">{status.nick} connected to {status.serverName} in channel {status.channel}</div> : 
