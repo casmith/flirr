@@ -12,6 +12,7 @@ function App() {
 
     const [queue, setQueue] = useState([])
     const [status, setStatus] = useState({})
+    const [users, setUsers] = useState([])
 
     const handleEnqueue = (item) => {
         const request = {servers: [{nick: item.tracks[0].nick, requests: item.tracks.map(track => ({request: track.requestString}))}]};
@@ -23,6 +24,8 @@ function App() {
     useEffect(() => {
         axios.get('/api/status').then(response => response.data)
             .then(status => setStatus(status))
+        axios.get('/api/server/users').then(response => response.data)
+            .then(status => setUsers(status))
     }, [true])
 
     const statusElement = status.connected ? 
@@ -30,7 +33,8 @@ function App() {
         <div class="status">Not connected</div>
 
     return (
-        <div>
+        <div className="container">
+            <div className="content">
             <Router>
                 <Menu downloads={queue.length} />
                 {statusElement}
@@ -47,6 +51,12 @@ function App() {
                     </Route>
                 </Switch>
             </Router>
+            </div>
+            <div className="sidebar">
+                {users.map(user => (
+                    <div>{user}</div>
+                 ))}
+            </div>
         </div>
     );
 }

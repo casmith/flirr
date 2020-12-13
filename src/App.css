@@ -1,4 +1,20 @@
 body {
     background-color: black;
     color: white;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+  }
+  
+.sidebar {
+  width: 150px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.content { 
+  flex-grow: 1;
 }
