@@ -6,6 +6,8 @@ import Menu from './Menu';
 import Queue from './Queue';
 import Search from './Search';
 import axios from 'axios';
+import Drawer from '@material-ui/core/Drawer';
+import Button from '@material-ui/core/Button';
 
 function App() {
 
@@ -65,6 +67,17 @@ function App() {
         <div class="status">{status.nick} connected to {status.serverName} in channel {status.channel}</div> : 
         <div class="status">Not connected</div>
 
+    const [state, setState] = React.useState({
+        drawer: false
+    });
+
+    const toggleDrawer = (anchor, open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+          return;
+        }
+    
+        setState({ ...state, [anchor]: open });
+      };
     return (
         <div className="container">
             <div className="content">
@@ -84,6 +97,10 @@ function App() {
                 </Switch>
             </Router>
             </div>
+            {/* <Button onClick={toggleDrawer("right", true)}>Clicky</Button>
+            <Drawer anchor="right" onClose={toggleDrawer("right", false)}>
+            {users.map(user => ( <div>{user}</div> ))}
+            </Drawer> */}
             <div className="sidebar">
                 {users.map(user => (
                     <div>{user}</div>
