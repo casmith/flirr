@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import PersonIcon from '@material-ui/icons/Person';
 
 function Search({handleEnqueue}) {
     const [results, setResults] = useState([]);
@@ -37,16 +40,13 @@ function Search({handleEnqueue}) {
 
     return (
         <form onSubmit={submitSearch}>
-            <label>Search:
-                <input name="search" onChange={e => setKeywords(e.target.value)}></input>
-                <input type="submit" value="Submit" />
-            </label>
+            <TextField id="standard-search" label="Search field" type="search" onChange={e => setKeywords(e.target.value)} />
             <h2>Results</h2>
             {inProgress && (<div>Searching...</div>)}
             <div>
             {!inProgress && (!!results.length || (<div>No search results</div>))}
             {results.map((result, i) => (
-                <div key={i}>{result.tracks[0].nick}{users.includes(result.tracks[0].nick) || ' (Offline)'} {result.album} {result.filename} <button onClick={() => enqueue(result)}>Enqueue</button>
+                <div key={i}>{users.includes(result.tracks[0].nick) ? <PersonIcon color="primary" /> : <PersonIcon color="disabled" />}{result.tracks[0].nick} {result.album} {result.filename} <Button variant="contained" color="primary" onClick={() => enqueue(result)}>Enqueue</Button>
                 {result.tracks.map(track => (
                     <div>{track.filename}</div>
                 ))}
