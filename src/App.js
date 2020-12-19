@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 import Menu from './Menu';
 import Queue from './Queue';
 import Search from './Search';
-import axios from 'axios';
-import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
 
 function App() {
 
     const [status, setStatus] = useState({})
-    const [users, setUsers] = useState([])
     const [queue, setQueue] = useState([]);
     
     const loadQueue = () => {
@@ -55,29 +52,10 @@ function App() {
         
     }, [true])
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-        axios.get('/api/server/users').then(response => response.data)
-            .then(status => setUsers(status))    
-        }, 5000);
-        return () => {clearInterval(interval);};
-    }, []);
-
     const statusElement = status.connected ? 
         <div class="status">{status.nick} connected to {status.serverName} in channel {status.channel}</div> : 
         <div class="status">Not connected</div>
 
-    const [state, setState] = React.useState({
-        drawer: false
-    });
-
-    const toggleDrawer = (anchor, open) => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-          return;
-        }
-    
-        setState({ ...state, [anchor]: open });
-      };
     return (
         <div className="container">
             <div className="content">
@@ -97,15 +75,6 @@ function App() {
                 </Switch>
             </Router>
             </div>
-            {/* <Button onClick={toggleDrawer("right", true)}>Clicky</Button>
-            <Drawer anchor="right" onClose={toggleDrawer("right", false)}>
-            {users.map(user => ( <div>{user}</div> ))}
-            </Drawer> */}
-            {/* <div className="sidebar">
-                {users.map(user => (
-                    <div>{user}</div>
-                 ))}
-            </div> */}
         </div>
     );
 }
