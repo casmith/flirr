@@ -101,11 +101,11 @@ function App() {
             <Drawer anchor="right" onClose={toggleDrawer("right", false)}>
             {users.map(user => ( <div>{user}</div> ))}
             </Drawer> */}
-            <div className="sidebar">
+            {/* <div className="sidebar">
                 {users.map(user => (
                     <div>{user}</div>
                  ))}
-            </div>
+            </div> */}
         </div>
     );
 }
