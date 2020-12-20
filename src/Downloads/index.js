@@ -17,17 +17,7 @@ function Downloads({queue}) {
 
     const reloadHistory = () => {
         return loadHistory()
-            .then(history => {
-    
-                console.log(history)
-                setHistory(history.slice(0, 50)); // last 50
-                // setHistory(q.servers
-                //     .flat()
-                //     .reduce((acc, item) => {
-                //         item.requests.forEach(r => acc.push({nick: item.nick, filename: r.request, status: r.status}))
-                //         return acc;
-                //     }, []));
-            })
+            .then(history => setHistory(history.slice(0, 50))) // last 50
             .catch(e => console.error(e));
     }
     useEffect(() => {
