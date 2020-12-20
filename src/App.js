@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
+import Downloads from './Downloads';
 import Menu from './Menu';
-import Queue from './Queue';
 import Search from './Search';
 
 function App() {
@@ -70,7 +70,7 @@ function App() {
                         <Search handleEnqueue={handleEnqueue}/>
                     </Route>
                     <Route path="/downloads">
-                        <Queue queue={queue} />
+                        <Downloads queue={queue} />
                     </Route>
                 </Switch>
             </Router>
