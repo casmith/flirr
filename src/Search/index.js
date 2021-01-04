@@ -36,6 +36,11 @@ function Search({handleEnqueue}) {
             setRows(results.map(result => { 
                 const parts = result.album.split("\\");
                 const album = parts.slice(parts.length - 3, parts.length -1).join("\\") || result.album;
+                const tracks = result.tracks.map(track => {
+                    // enqueue a single track
+                    track.enqueue = () => enqueue({tracks: [track]});
+                    return track;
+                })
                 return {nick: result.nick, album, tracks: result.tracks, enqueue: () => enqueue(result)};
             }));
         });

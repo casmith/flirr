@@ -1,5 +1,6 @@
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -16,12 +17,13 @@ function RowDetails({ row, open }) {
                     <Box margin={1}>
                         <Typography variant="h6" gutterBottom component="div">
                             Tracks
-              </Typography>
+                        </Typography>
                         <Table size="small" aria-label="purchases">
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Filename</TableCell>
                                     <TableCell>Info</TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -31,6 +33,7 @@ function RowDetails({ row, open }) {
                                             {track.filename}
                                         </TableCell>
                                         <TableCell>{track.info}</TableCell>
+                                        <TableCell><GetAppIcon onClick={track.enqueue} color="primary" /></TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
