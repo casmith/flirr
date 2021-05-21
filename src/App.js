@@ -35,7 +35,7 @@ function App() {
 
     useEffect(() => {
         reloadQueue();
-    });
+    }, []);
 
 
     useEffect(() => {
@@ -63,7 +63,7 @@ function App() {
         axios.get('/api/status').then(response => response.data)
             .then(status => setStatus(status))
         
-    }, [])
+    }, [true])
 
     const statusElement = status.connected ? 
         <div className="status">{status.nick} connected to {status.serverName} in channel {status.channel}</div> : 
