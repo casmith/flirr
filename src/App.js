@@ -7,6 +7,8 @@ import Downloads from './Downloads';
 import Menu from './Menu';
 import Search from './Search';
 
+import socketIOClient from "socket.io-client";
+
 function App() {
 
     const [status, setStatus] = useState({})
@@ -33,11 +35,22 @@ function App() {
 
     useEffect(() => {
         reloadQueue();
-        const interval = setInterval(() => {
-            reloadQueue();
-        }, 5000);
-        return () => {clearInterval(interval);};
-    }, []);
+    });
+
+
+    useEffect(() => {
+        const socket = socketIOClient();
+        socket.on("queue-updated", data => {
+                setQueue(data.data.servers
+                    .flat()
+                    .reduce((acc, item) => {
+                        item.requests.forEach(r => acc.push({nick: item.nick, filename: r.request, status: r.status}))
+                        return acc;
+                    }, []));
+
+            console.log('msg received', data);
+        });
+      }, []);
 
     const handleEnqueue = (item) => {
         const request = {servers: [{nick: item.tracks[0].nick, requests: item.tracks.map(track => ({request: track.requestString}))}]};
@@ -50,11 +63,11 @@ function App() {
         axios.get('/api/status').then(response => response.data)
             .then(status => setStatus(status))
         
-    }, [true])
+    }, [])
 
     const statusElement = status.connected ? 
-        <div class="status">{status.nick} connected to {status.serverName} in channel {status.channel}</div> : 
-        <div class="status">Not connected</div>
+        <div className="status">{status.nick} connected to {status.serverName} in channel {status.channel}</div> : 
+        <div className="status">Not connected</div>
 
     return (
         <div className="container">

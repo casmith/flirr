@@ -8,10 +8,6 @@ const loadHistory = () => {
         .catch((error) => console.error(error))
 }
 
-
-
-
-
 function Downloads({queue}) {
     const [history, setHistory] = useState([]);
 
@@ -32,14 +28,16 @@ function Downloads({queue}) {
         <div>
             <h2>Queue: </h2>
             <table>
-                <tr>
-                    <th>Nick</th>
-                    <th>Filename</th>
-                    <th>Status</th>
-                </tr>
-                <tbody>
-                {queue.map(item => (
+                <thead>
                     <tr>
+                        <th>Nick</th>
+                        <th>Filename</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {queue.map((item, i) => (
+                    <tr key={i}>
                         <td>{item.nick}</td>
                         <td>{item.filename}</td>
                         <td>{item.status}</td>
@@ -50,13 +48,15 @@ function Downloads({queue}) {
 
             <h2>History:</h2>
             <table>
-                <tr>
-                    <th>Nick</th>
-                    <th>Filename</th>
-                </tr>
-                <tbody>
-                {history.map(item => (
+                <thead>
                     <tr>
+                        <th>Nick</th>
+                        <th>Filename</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {history.map((item, i) => (
+                    <tr key={i}>
                         <td>{item.nick}</td>
                         <td>{item.filename}</td>
                     </tr>

@@ -34,13 +34,7 @@ function Search({handleEnqueue}) {
             setUsers(users);
             console.log(results);
             setRows(results.map(result => { 
-                const parts = result.album.split("\\");
-                const album = result.album; //parts.slice(parts.length - 3, parts.length -1).join("\\") || result.album;
-                const tracks = result.tracks.map(track => {
-                    // enqueue a single track
-                    track.enqueue = () => enqueue({tracks: [track]});
-                    return track;
-                })
+                const album = result.album;
                 return {nick: result.nick, album, tracks: result.tracks, enqueue: () => enqueue(result)};
             }));
         });
