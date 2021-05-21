@@ -44,12 +44,3 @@ jobs:
         push: true
         tags: casmith/flirr:latest
         platforms: linux/amd64,linux/arm64
-          
-    - name: "Deploy"
-      uses: GoldenspearLLC/build-jenkins-job@master
-      with:
-        jenkins-url: ${{ secrets.JENKINS_URL }}
-        jenkins-token: ${{ secrets.JENKINS_TOKEN }}
-        user: ${{ secrets.JENKINS_USERNAME }}
-        job-path: "job/deploy/job/master"
-        job-params: '{"component": "flirr"}'
