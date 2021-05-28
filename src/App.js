@@ -39,7 +39,7 @@ function App() {
 
 
     useEffect(() => {
-        const socket = socketIOClient('/api');
+        const socket = socketIOClient();
         socket.on("queue-updated", data => {
                 setQueue(data.data.servers
                     .flat()
