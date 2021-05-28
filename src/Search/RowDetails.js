@@ -1,5 +1,6 @@
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
+import DoneIcon from '@material-ui/icons/Done';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,6 +9,16 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
+
+function DownloadIcon(props) {
+    const {track} = props;
+    if (!track.queued) {
+        return (<GetAppIcon onClick={track.enqueue} color="primary" />);
+    } else {
+        return (<DoneIcon color="primary"/>);
+    }
+}
+
 
 function RowDetails({ row, open }) {
     return (
@@ -33,7 +44,11 @@ function RowDetails({ row, open }) {
                                             {track.filename}
                                         </TableCell>
                                         <TableCell>{track.info}</TableCell>
-                                        <TableCell><GetAppIcon onClick={track.enqueue} color="primary" /></TableCell>
+                                        <TableCell>
+
+                                            <DownloadIcon track={track} />
+                                            
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

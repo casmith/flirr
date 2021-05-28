@@ -40,12 +40,12 @@ function App() {
 
     useEffect(() => {
         socketIOClient().on("queue-updated", data => {
-                setQueue(data.data.servers
-                    .flat()
-                    .reduce((acc, item) => {
-                        item.requests.forEach(r => acc.push({nick: item.nick, filename: r.request, status: r.status}))
-                        return acc;
-                    }, []));
+            setQueue(data.data.servers
+                .flat()
+                .reduce((acc, item) => {
+                    item.requests.forEach(r => acc.push({nick: item.nick, filename: r.request, status: r.status}))
+                    return acc;
+                }, []));
             });
     }, []);
 

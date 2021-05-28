@@ -36,7 +36,10 @@ function Search({handleEnqueue}) {
                 const album = result.album;
                 const tracks = result.tracks.map(track => {
                     // enqueue a single track
-                    track.enqueue = () => enqueue({tracks: [track]});
+                    track.enqueue = () => {
+                        track.queued = true;
+                        enqueue({tracks: [track]});
+                    }
                     return track;
                 })
                 return {nick: result.nick, album, tracks: tracks, enqueue: () => enqueue(result)};
