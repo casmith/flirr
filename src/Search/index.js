@@ -42,7 +42,16 @@ function Search({handleEnqueue}) {
                     }
                     return track;
                 })
-                return {nick: result.nick, album, tracks: tracks, enqueue: () => enqueue(result)};
+                return {
+                    nick: result.nick, 
+                    album, 
+                    tracks,
+                    // enqueue the whole album
+                    enqueue: () => {
+                        result.queued = true;
+                        enqueue(result);
+                    }
+                };
             }));
         });
     }

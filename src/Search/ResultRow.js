@@ -8,6 +8,15 @@ import PersonIcon from '@material-ui/icons/Person';
 import React from 'react';
 import RowDetails from './RowDetails';
 
+function DownloadIcon(props) {
+    const {row} = props;
+    if (!row.queued) {
+        return (<GetAppIcon onClick={row.enqueue} color="primary" />);
+    } else {
+        return (<DoneIcon color="primary"/>);
+    }
+}
+
 function ResultRow({ row, users }) {
     const [open, setOpen] = React.useState(false);
     return (<>
@@ -24,7 +33,7 @@ function ResultRow({ row, users }) {
             <TableCell align="left">{row.album}</TableCell>
             <TableCell align="right">{row.tracks.length}</TableCell>
             <TableCell align="right">
-                <GetAppIcon onClick={row.enqueue} color="primary" />
+                <DownloadIcon row={row} />
             </TableCell>
         </TableRow>
         <RowDetails row={row} open={open}></RowDetails>
