@@ -18,7 +18,7 @@ function Search({handleEnqueue}) {
                 .then(response => ([searchResults, response.data])))
             .catch((error) => {
                 console.error(error);
-                return [];
+                return [[], []];
             })
             .finally(results => {
                 setInProgress(false)

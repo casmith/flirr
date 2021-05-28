@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './Downloads.css';
+import socketIOClient from "socket.io-client";
 
 const loadHistory = () => {
     return axios.get('/api/history')
@@ -16,13 +17,18 @@ function Downloads({queue}) {
             .then(history => setHistory(history.slice(0, 50))) // last 50
             .catch(e => console.error(e));
     }
+
     useEffect(() => {
-        reloadHistory();
-        const interval = setInterval(() => {
-            reloadHistory();
-        }, 5000);
-        return () => {clearInterval(interval);};
+        reloadHistory()
     }, []);
+
+    useEffect(() => {
+        const socket = socketIOClient();
+        socket.on("history-updated", data => {
+            setHistory(data.data.slice(0, 50))
+        });
+      }, []);
+
 
     return (
         <div>

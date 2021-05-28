@@ -39,18 +39,15 @@ function App() {
 
 
     useEffect(() => {
-        const socket = socketIOClient();
-        socket.on("queue-updated", data => {
+        socketIOClient().on("queue-updated", data => {
                 setQueue(data.data.servers
                     .flat()
                     .reduce((acc, item) => {
                         item.requests.forEach(r => acc.push({nick: item.nick, filename: r.request, status: r.status}))
                         return acc;
                     }, []));
-
-            console.log('msg received', data);
-        });
-      }, []);
+            });
+    }, []);
 
     const handleEnqueue = (item) => {
         const request = {servers: [{nick: item.tracks[0].nick, requests: item.tracks.map(track => ({request: track.requestString}))}]};
