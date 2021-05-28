@@ -32,10 +32,14 @@ function Search({handleEnqueue}) {
         return search(keywords).then((response) => {
             const [results, users] = response;
             setUsers(users);
-            console.log(results);
             setRows(results.map(result => { 
                 const album = result.album;
-                return {nick: result.nick, album, tracks: result.tracks, enqueue: () => enqueue(result)};
+                const tracks = result.tracks.map(track => {
+                    // enqueue a single track
+                    track.enqueue = () => enqueue({tracks: [track]});
+                    return track;
+                })
+                return {nick: result.nick, album, tracks: tracks, enqueue: () => enqueue(result)};
             }));
         });
     }
