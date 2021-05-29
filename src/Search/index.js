@@ -34,24 +34,20 @@ function Search({handleEnqueue}) {
             setUsers(users);
             setRows(results.map(result => { 
                 const album = result.album;
-                const tracks = result.tracks.map(track => {
+                result.tracks = result.tracks.map(track => {
                     // enqueue a single track
                     track.enqueue = () => {
                         track.queued = true;
                         enqueue({tracks: [track]});
                     }
                     return track;
-                })
-                return {
-                    nick: result.nick, 
-                    album, 
-                    tracks,
-                    // enqueue the whole album
-                    enqueue: () => {
-                        result.queued = true;
-                        enqueue(result);
-                    }
-                };
+                });
+                result.enqueue = () => {
+                    result.queued = true;
+                    enqueue(result);
+                }
+
+                return result;
             }));
         });
     }
