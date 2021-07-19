@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import React from 'react';
-import ResultRow from './ResultRow';
+import HistoryRow from './HistoryRow';
 
 const useStyles = makeStyles({
     table: {
@@ -15,26 +15,24 @@ const useStyles = makeStyles({
     }
 });
 
-const ResultsTable = ({rows, users}) => {
+const HistoryTable = ({rows}) => {
     const classes = useStyles();
     return (
         <TableContainer component={Paper}>
             <Table size="small" className={classes.table} aria-label="simple table">
                 <TableHead>
                 <TableRow>
-                    <TableCell></TableCell>
                     <TableCell align="left">Nick</TableCell>
-                    <TableCell align="left">Album</TableCell>
-                    <TableCell align="right">Tracks</TableCell>
-                    <TableCell align="right"></TableCell>
+                    <TableCell align="left">Filename</TableCell>
+                    <TableCell align="right">Completed</TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>
-                {rows.map((row) => (<ResultRow row={row} users={users} />))}
+                {rows.map((row) => (<HistoryRow row={row} />))}
                 </TableBody>
             </Table>
         </TableContainer>
     );
 }
 
-export default ResultsTable;
+export default HistoryTable;

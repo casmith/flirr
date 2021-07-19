@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './Downloads.css';
 import socketIOClient from "socket.io-client";
+import MiddleEllipsis from "react-middle-ellipsis";
+import HistoryTable from './HistoryTable';
 
 const loadHistory = () => {
     return axios.get('/api/history')
@@ -53,22 +55,8 @@ function Downloads({queue}) {
             </table>
 
             <h2>History:</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nick</th>
-                        <th>Filename</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {history.map((item, i) => (
-                    <tr key={i}>
-                        <td>{item.nick}</td>
-                        <td>{item.filename}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
+            {(!!history.length) && (<HistoryTable rows={history}></HistoryTable>)}
+            
 
         </div>
     )
