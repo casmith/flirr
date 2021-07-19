@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './Downloads.css';
 import socketIOClient from "socket.io-client";
-import MiddleEllipsis from "react-middle-ellipsis";
 import HistoryTable from './HistoryTable';
 
 const loadHistory = () => {
